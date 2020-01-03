@@ -31,9 +31,3 @@ decimal = Number . rd <$> integer <++> decimalPart <++> e
     rd = read :: String -> Float
     decimalPart = option "" (char '.' <:> number)
     e = option "" (oneOf "eE" <:> integer)
-
-oneOf :: String -> ReadP Char
-oneOf s = satisfy (`elem` s)
-
-charToString :: Char -> String
-charToString c = [c]

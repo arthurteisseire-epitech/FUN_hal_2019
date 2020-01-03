@@ -21,3 +21,6 @@ minus = char '-' <:> number
 
 (<:>) :: ReadP Char -> ReadP String -> ReadP String
 (<:>) a b = fmap (:) a <*> b
+
+oneOf :: String -> ReadP Char
+oneOf s = satisfy (`elem` s)
