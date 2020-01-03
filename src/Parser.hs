@@ -1,5 +1,6 @@
 module Parser where
 
+import           Builtin
 import           Control.Applicative
 import           Expression
 import           ParseUtils
@@ -22,7 +23,7 @@ parseList = do
     return $ List expr
 
 symbol :: ReadP Expr
-symbol = Symbol . charToString <$> oneOf "+-"
+symbol = Symbol <$> choice (map string symbols)
 
 decimal :: ReadP Expr
 decimal = Number . rd <$> integer <++> decimalPart <++> e
