@@ -1,6 +1,9 @@
 module Main where
 
-import Lib
+import Parser
+import Eval
 
 main :: IO ()
-main = someFunc
+main = do
+    line <- getLine
+    print $ (eval . parse) line
