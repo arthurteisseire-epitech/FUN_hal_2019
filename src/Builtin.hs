@@ -5,7 +5,8 @@ import Data.Fixed
 
 
 arithmetic :: (Float -> Float -> Float) -> [Expr] -> Expr
-arithmetic f [Number num1, Number num2] = Number $ f num1 num2
+arithmetic op = foldl1 (f op)
+  where f op (Number a) (Number b) = Number (a `op` b)
 
 env :: [(String, Expr)]
 env = [ ("+", Func (arithmetic (+)))
