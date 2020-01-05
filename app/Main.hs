@@ -1,5 +1,6 @@
 module Main where
 
+import           Data.Char
 import           Eval
 import           Parser
 import           System.Environment
@@ -15,7 +16,7 @@ interpret args
     | otherwise = interpretFile args
 
 interpretFile :: [String] -> IO ()
-interpretFile args = openFile (head args) ReadMode >>= hGetContents >>= interpretLine . filter (/= '\n')
+interpretFile args = openFile (head args) ReadMode >>= hGetContents >>= interpretLine . filter isControl
 
 repl :: IO ()
 repl = do
