@@ -26,5 +26,6 @@ instance Show Expr where
 instance Eq Expr where
     Number x1 == Number x2 = x1 == x2
     Boolean x1 == Boolean x2 = x1 == x2
+    Func x1 == Func x2 = False
     Symbol x1 == Symbol x2 = x1 == x2
     List x1 == List x2 = x1 == x2
