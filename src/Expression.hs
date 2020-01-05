@@ -18,10 +18,7 @@ instance Show Expr where
         | isInt x = printf "%.0f" x
         | otherwise = show x
     show (Symbol x) = x
-    show (Boolean x) =
-        if x
-            then "#t"
-            else "#f"
+    show (Boolean x) = if x then "#t" else "#f"
     show (Func x) = "<function>"
     show (List x) = "(" ++ unwords (map show x) ++ ")"
 
