@@ -2,7 +2,7 @@ module Expression
     ( Expr(..)
     ) where
 
-import Text.Printf (printf)
+import           Text.Printf (printf)
 
 data Expr
     = Number Float
@@ -17,11 +17,13 @@ instance Show Expr where
     show (Number x)
         | isInt x = printf "%.0f" x
         | otherwise = show x
-
     show (Symbol x) = x
-    show (Boolean x) = if x then "#t" else "#f"
-    show (Func x)   = "<function>"
-    show (List x)   = "(" ++ unwords (map show x) ++ ")"
+    show (Boolean x) =
+        if x
+            then "#t"
+            else "#f"
+    show (Func x) = "<function>"
+    show (List x) = "(" ++ unwords (map show x) ++ ")"
 
 instance Eq Expr where
     Number x1 == Number x2 = x1 == x2
