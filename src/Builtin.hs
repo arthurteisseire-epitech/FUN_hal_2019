@@ -20,6 +20,7 @@ env =
     , ("*", Func (arithmetic (*)))
     , ("**", Func (arithmetic (**)))
     , ("div", Func (arithmetic (/)))
+    , ("/", Func (arithmetic (/)))
     , ("mod", Func (arithmetic mod'))
     , ("<", Func inferior)
     , ("eq?", Func eq)
