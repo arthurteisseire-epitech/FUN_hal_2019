@@ -11,11 +11,9 @@ data Expr
     | Func ([Expr] -> Expr)
     | List [Expr]
 
-isInt x = x == fromInteger (round x)
-
 instance Show Expr where
     show (Number x)
-        | isInt x = printf "%.0f" x
+        | x == fromInteger (round x) = printf "%.0f" x
         | otherwise = show x
     show (Symbol x) = x
     show (Boolean x) = if x then "#t" else "#f"
