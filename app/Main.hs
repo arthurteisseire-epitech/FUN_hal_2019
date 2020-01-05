@@ -4,7 +4,6 @@ import           Data.Char
 import           Eval
 import           Parser
 import           System.Environment
-import           System.Exit
 import           System.IO
 
 main :: IO ()
@@ -30,7 +29,4 @@ repl = do
             repl
 
 interpretLine :: String -> IO ()
-interpretLine s =
-    case eval <$> parse s of
-        Left s  -> print s
-        Right s -> print s
+interpretLine s = either print print (eval <$> parse s)
