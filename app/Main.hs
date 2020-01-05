@@ -29,4 +29,4 @@ repl = do
             repl
 
 interpretLine :: String -> IO ()
-interpretLine = print . eval . parse
+interpretLine s = print $ eval <$> parse s

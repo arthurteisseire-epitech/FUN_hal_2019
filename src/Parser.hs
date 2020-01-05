@@ -6,8 +6,12 @@ import           Expression
 import           ParseUtils
 import           Text.ParserCombinators.ReadP
 
-parse :: String -> Expr
-parse s = fst $ last $ readP_to_S parseExpr s
+parse :: String -> Either String Expr
+parse s
+    | null res = Left errorInParsing
+    | otherwise = Right $ fst $ last res
+  where
+    res = readP_to_S parseExpr s
 
 parseExpr :: ReadP Expr
 parseExpr = skipSpaces *> parseExprHelper <* skipSpaces
@@ -31,3 +35,6 @@ decimal = Number . rd <$> integer <++> decimalPart <++> e
     rd = read :: String -> Float
     decimalPart = option "" (char '.' <:> number)
     e = option "" (oneOf "eE" <:> integer)
+
+errorInParsing :: String
+errorInParsing = "Error in parsing"
