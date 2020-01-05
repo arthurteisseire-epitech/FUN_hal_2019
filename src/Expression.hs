@@ -2,6 +2,8 @@ module Expression
     ( Expr(..)
     ) where
 
+import Text.Printf (printf)
+
 data Expr
     = Number Float
     | Boolean Bool
@@ -9,8 +11,13 @@ data Expr
     | Func ([Expr] -> Expr)
     | List [Expr]
 
+isInt x = x == fromInteger (round x)
+
 instance Show Expr where
-    show (Number x) = show x
+    show (Number x)
+        | isInt x = printf "%.0f" x
+        | otherwise = show x
+
     show (Symbol x) = x
     show (Boolean x) = if x then "#t" else "#f"
     show (Func x)   = "<function>"
