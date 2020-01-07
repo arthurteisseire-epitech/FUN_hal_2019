@@ -15,7 +15,7 @@ interpret args
     | otherwise = interpretFile args
 
 interpretFile :: [String] -> IO ()
-interpretFile args = openFile (head args) ReadMode >>= hGetContents >>= interpretLine . filter isControl
+interpretFile args = openFile (head args) ReadMode >>= hGetContents >>= putStrLn . interpretLine . filter isControl
 
 repl :: IO ()
 repl = do
@@ -23,10 +23,17 @@ repl = do
     if isEof
         then putStrLn "goodbye!"
         else do
-            line <- getLine
-            interpretLine line
-            hFlush stdout
+            interactLine interpretLine
             repl
 
-interpretLine :: String -> IO ()
-interpretLine s = either print print (eval <$> parse s)
+interpretLine :: String -> String
+interpretLine = showEither . (fmap . fmap) eval parse
+
+showEither :: Show a => Either String a -> String
+showEither = either show show
+
+interactLine :: (String -> String) -> IO ()
+interactLine f = do
+    s <- getLine
+    putStrLn (f s)
+    hFlush stdout
