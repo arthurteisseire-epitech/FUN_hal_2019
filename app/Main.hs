@@ -19,7 +19,10 @@ interpretFile :: [String] -> IO ()
 interpretFile args = openFile (head args) ReadMode >>= hGetContents >>= putStrLn . interpretLine . filter isControl
 
 repl :: IO ()
-repl = ((unless :: Bool -> IO () -> IO ()) <$> isEOF) *> (interactLine interpretLine >> repl)
+repl = unlessM isEOF (interactLine interpretLine >> repl)
+
+unlessM :: Monad m => m Bool -> m () -> m ()
+unlessM b m = b >>= (`unless` m)
 
 interactLine :: (String -> String) -> IO ()
 interactLine f = getLine >>= \l -> putStrLn (f l) >> hFlush stdout
