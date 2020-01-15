@@ -13,10 +13,10 @@ main = getArgs >>= interpret
 
 interpret :: [String] -> IO ()
 interpret [] = repl
-interpret args = interpretFile args
+interpret args = mapM_ interpretFile args
 
-interpretFile :: [String] -> IO ()
-interpretFile args = openFile (head args) ReadMode >>= hGetContents >>= putStrLn . interpretLine . filter isControl
+interpretFile :: String -> IO ()
+interpretFile filename = openFile filename ReadMode >>= hGetContents >>= putStrLn . interpretLine . filter (not . isControl)
 
 repl :: IO ()
 repl = unlessM isEOF (interactLine interpretLine >> repl)

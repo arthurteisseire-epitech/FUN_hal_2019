@@ -9,7 +9,7 @@ import           Text.ParserCombinators.ReadP
 parse :: String -> Either String Expr
 parse s
     | null res = Left errorInParsing
-    | otherwise = Right $ fst $ last res
+    | otherwise = Right . fst . last $ res
   where
     res = readP_to_S parseExpr s
 
