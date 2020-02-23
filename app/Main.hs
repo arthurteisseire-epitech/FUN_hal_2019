@@ -25,7 +25,7 @@ unlessM :: Monad m => m Bool -> m () -> m ()
 unlessM b m = b >>= (`unless` m)
 
 interactLine :: (String -> String) -> IO ()
-interactLine f = getLine >>= \l -> putStrLn (f l) >> hFlush stdout
+interactLine f = getLine >>= putStrLn . f >> hFlush stdout
 
 interpretLine :: String -> String
 interpretLine s = either show show (eval <$> parse s)
