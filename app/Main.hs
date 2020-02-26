@@ -16,7 +16,7 @@ interpret [] = repl
 interpret args = mapM_ interpretFile args
 
 interpretFile :: String -> IO ()
-interpretFile filename = openFile filename ReadMode >>= hGetContents >>= putStrLn . interpretLine . filter (not . isControl)
+interpretFile filename = readFile filename >>= putStrLn . interpretLine . filter (not . isControl)
 
 repl :: IO ()
 repl = unlessM isEOF (interactLine interpretLine >> repl)
